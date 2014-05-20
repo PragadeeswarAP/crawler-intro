@@ -16,8 +16,10 @@ object CrawlDriver extends App {
   config.setCrawlStorageFolder(crawlStorageFolder)
   config.setPolitenessDelay(1000)
   config.setMaxDepthOfCrawling(3)
-  config.setMaxPagesToFetch(1000)
-  config.setResumableCrawling(true) // Enable as required
+//  config.setMaxPagesToFetch(100)
+//  config.setResumableCrawling(true) // Enable as required
+//  config.setProxyHost("proxyserver.example.com");
+//  config.setProxyPort(8080);
   // TODO: Add proxy support for your crawler to not get blocked.
   /*
     How Proxy works
@@ -40,7 +42,7 @@ object CrawlDriver extends App {
    * URLs that are fetched and then the crawler starts following links
    * which are found in these pages
    */
-  controller.addSeed("http://www.flipkart.com")
+  controller.addSeed("http://www.jabong.com")
 
   /*
    * Start the crawl. This is a blocking operation, meaning that your code

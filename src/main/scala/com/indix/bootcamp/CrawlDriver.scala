@@ -3,7 +3,7 @@ package com.indix.bootcamp
 import edu.uci.ics.crawler4j.crawler.{CrawlConfig, CrawlController}
 import edu.uci.ics.crawler4j.robotstxt.{RobotstxtConfig, RobotstxtServer}
 import edu.uci.ics.crawler4j.fetcher.PageFetcher
-import com.indix.bootcamp.crawler.FlipkartCrawler
+import com.indix.bootcamp.crawler.JabongCrawler
 import java.io.File
 
 object CrawlDriver extends App {
@@ -42,12 +42,12 @@ object CrawlDriver extends App {
    * URLs that are fetched and then the crawler starts following links
    * which are found in these pages
    */
-  controller.addSeed("http://www.jabong.com")
+  controller.addSeed("http://www.jabong.com/men/clothing/mens-t-shirts/")
 
   /*
    * Start the crawl. This is a blocking operation, meaning that your code
    * will reach the line after this only when crawling is finished.
    */
-  controller.start(classOf[FlipkartCrawler], numberOfCrawlers)
+  controller.start(classOf[JabongCrawler], numberOfCrawlers)
 
 }

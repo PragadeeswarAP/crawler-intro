@@ -10,6 +10,6 @@ case class Price(listPrice: Double, salePrice: Double) {
 
 case class Result(product: Option[Product], price: Option[Price]) {
   def isValidProductPage = product.isDefined && price.isDefined
-
+//  def getProductName = product match{
   def toCsv = s"${product.map(_.toCsv).getOrElse(",,")},${price.map(_.toCsv).getOrElse(",")}"
 }

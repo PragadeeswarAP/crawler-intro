@@ -2,7 +2,8 @@ package com.indix.bootcamp.crawler
 
 import edu.uci.ics.crawler4j.crawler.{Page, WebCrawler}
 import edu.uci.ics.crawler4j.parser.HtmlParseData
-import com.indix.bootcamp.parser.{JabongParser, Parser, FlipkartParser}
+import com.indix.bootcamp.parser.{JabongParser, Parser}
+//import com.indix.bootcamp.parser.{JabongParser, Parser, FlipkartParser}
 import java.io.{PrintWriter, File}
 import scala.util.Random
 import edu.uci.ics.crawler4j.url.WebURL
@@ -11,16 +12,9 @@ abstract class BaseCrawler extends WebCrawler {
   val parser: Parser
   val writer = new PrintWriter(new File("/tmp/crawler4j-scala/results-" + Random.nextInt(Int.MaxValue) + ".csv"))
 
-  /*
-    TODO: By default the crawler extracts urls from all the tags like link, script, embed, img, a etc.
-      Write an exclude filter for ignoring all the css / js / images / audio / video formats from the urls.
-      Also make sure you don't want to download urls that emits ZIP / TAR / GZ files.
-
-      An example is provided for reference.
-   */
   def excludeFilters = List(
-    "(?i)(.*(\\.(pdf|flv))(\\?.*)*)$"
-      +".*(\\.(css|js|bmp|gif|jpe?g"
+    "(?i)(.*(\\.(pdf|flv))(\\?.*)*)$",
+      ".*(\\.(css|js|bmp|gif|jpe?g"
       + "|png|tiff?|mid|mp2|mp3|mp4"
       + "|wav|avi|mov|mpeg|ram|m4v|pdf"
       + "|rm|smil|wmv|swf|wma|zip|rar|gz))$"
@@ -36,9 +30,13 @@ abstract class BaseCrawler extends WebCrawler {
     page.getParseData match {
       case data: HtmlParseData =>
         val result = parser.parse(data.getHtml, page.getWebURL.getURL)
+        val checkProductPage = result.isValidProductPage
         println(s"Parsed successfully as ${result}")
-        writer.append(result.toCsv)
-        writer.append("\n")
+        if(checkProductPage){
+          println(s"Writing into csv file successfully as ${result}")
+          writer.append(result.toCsv)
+          writer.append("\n")
+        }
     }
   }
 
@@ -46,11 +44,11 @@ abstract class BaseCrawler extends WebCrawler {
     writer.close()
   }
 }
-
+/*
 class FlipkartCrawler extends BaseCrawler {
   override val parser: Parser = new FlipkartParser
 }
-
+*/
 class JabongCrawler extends BaseCrawler {
   override val parser: Parser = new JabongParser
 }
